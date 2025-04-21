@@ -62,7 +62,7 @@ def generate_recommendations(interaction_data, feature_data, knn_model, top_k=40
 
     recommendations = []
 
-    if interaction_data.empty:
+    if isinstance(interaction_data, pd.DataFrame) and interaction_data.empty:
         print("Interaction data is empty.")
         return pd.DataFrame(columns=['cookie', 'recommended_node', 'score'])
 
