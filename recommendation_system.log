@@ -169,3 +169,19 @@ Traceback (most recent call last):
                        ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
 KeyError: 'interaction_matrix'
 2025-04-21 16:23:34,744 - main - INFO - === System shutdown ===
+2025-04-21 17:29:46,591 - main - INFO - === Starting recommendation system ===
+2025-04-21 17:29:46,591 - utils.cache - INFO - Loading cached: load_data
+2025-04-21 17:29:56,188 - utils.cache - INFO - Loading cached: preprocess_data
+2025-04-21 17:30:26,443 - utils.cache - INFO - Loading cached: build_features
+2025-04-21 17:30:30,264 - utils.cache - INFO - Loading cached: build_interaction_matrix
+2025-04-21 17:30:31,565 - utils.cache - INFO - Loading cached: optimize_knn
+2025-04-21 17:30:31,566 - main - ERROR - Critical error: 'dict' object has no attribute 'empty'
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 42, in main
+    recommendations = generate_recommendations(interaction_data, feature_data, knn_model)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\models\knn.py", line 65, in generate_recommendations
+    if interaction_data.empty:
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'empty'
+2025-04-21 17:30:31,567 - main - INFO - === System shutdown ===
