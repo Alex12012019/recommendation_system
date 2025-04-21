@@ -33,9 +33,7 @@ def main():
         feature_data = build_features(preprocessed_data)
 
         # 5. Построение матрицы взаимодействий
-        interaction_result = build_interaction_matrix(preprocessed_data)
-        interaction_data = interaction_result["interaction_matrix"]
-        feature_data = interaction_result["feature_matrix"]
+        interaction_data = build_interaction_matrix(preprocessed_data, feature_data)
 
         # 6. Оптимизация KNN
         knn_model = optimize_knn(feature_data, preprocessed_data['interactions'])
