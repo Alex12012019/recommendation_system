@@ -1,0 +1,17 @@
+# Кэш Python
+__pycache__/
+
+# Виртуальное окружение
+.venv/
+.idea/
+cache/
+RAW_DATA/
+test_data/
+
+# Игнорируем тяжелые файлы
+*.pq
+*.parquet
+*.csv
+*.pkl
+*.pyc
+
