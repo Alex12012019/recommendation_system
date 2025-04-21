@@ -101,6 +101,7 @@ def preprocess_data(data):
         raise
 
 
+@cache_step('filter_features')
 def filter_features(preprocessed_data):
     """
     Очищает и фильтрует признаки объектов (например, товаров).
@@ -117,6 +118,48 @@ def filter_features(preprocessed_data):
     - pandas.DataFrame с очищенными и отфильтрованными признаками объектов.
     """
 
-    """Дополнительная фильтрация признаков"""
-    # ... (существующий код фильтрации)
+    """Фильтрация и уменьшение размерности признаков"""
+    items = preprocessed_data['items'].copy()
+
+    # 1. Фильтрация clean_params
+    logger.info("Filtering clean_params...")
+    param_stats = {}
+    for params in items['clean_params']:
+        try:
+            param_list = eval(params) if isinstance(params, str) else params
+            for p in param_list:
+                if isinstance(p, dict):
+                    key = (str(p.get('attr', '')), str(p.get('value', '')))
+                    param_stats[key] = param_stats.get(key, 0) + 1
+        except:
+            continue
+
+    top_pairs = sorted(param_stats.items(), key=lambda x: -x[1])[:1000]
+    keep_pairs = {pair for pair, _ in top_pairs}
+
+    filtered_params = []
+    for params in items['clean_params']:
+        try:
+            param_list = eval(params) if isinstance(params, str) else params
+            filtered = [
+                p for p in param_list
+                if isinstance(p, dict) and
+                   (str(p.get('attr', '')), str(p.get('value', ''))) in keep_pairs
+            ]
+            filtered_params.append(str(filtered) if filtered else '[]')
+        except:
+            filtered_params.append('[]')
+
+    items['clean_params'] = filtered_params
+
+    # 2. Уменьшение размерности title_projection
+    logger.info("Reducing title dimensions...")
+    titles = items['title_projection'].values
+    titles_matrix = np.vstack(titles)
+    pca = PCA(n_components=16)
+    reduced_titles = pca.fit_transform(titles_matrix)
+    items['title_projection'] = [reduced_titles[i] for i in range(len(titles))]
+
+    preprocessed_data['items'] = items
     return preprocessed_data
+
