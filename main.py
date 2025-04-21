@@ -33,7 +33,9 @@ def main():
         feature_data = build_features(preprocessed_data)
 
         # 5. Построение матрицы взаимодействий
-        interaction_data = build_interaction_matrix(preprocessed_data, feature_data)
+        interaction_result = build_interaction_matrix(preprocessed_data)
+        interaction_data = interaction_result["interaction_matrix"]
+        feature_data = interaction_result["feature_matrix"]
 
         # 6. Оптимизация KNN
         knn_model = optimize_knn(feature_data, preprocessed_data['interactions'])
@@ -52,6 +54,13 @@ def main():
 
         # 9. Обработка новых пользователей
         all_test_users = set(data['test_users']['cookie'].unique())
+
+        #print("Columns:", final_recommendations.columns)
+        #print("Head:\n", final_recommendations.head())
+        print(type(final_recommendations))
+        print(final_recommendations)
+        print(final_recommendations.columns)
+
         existing_users = set(final_recommendations['cookie'])
         new_users = all_test_users - existing_users
 

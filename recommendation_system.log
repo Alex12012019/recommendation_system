@@ -1,0 +1,171 @@
+2025-04-21 12:15:57,913 - main - INFO - === Starting recommendation system ===
+2025-04-21 12:15:57,913 - utils.cache - INFO - Computing: load_data
+2025-04-21 12:16:09,324 - utils.cache - INFO - Cached load_data (2.78s)
+2025-04-21 12:16:09,324 - utils.cache - INFO - Computing: preprocess_data
+2025-04-21 12:16:09,324 - data.preprocessor - INFO - Merging item data...
+2025-04-21 12:16:11,046 - data.preprocessor - INFO - Validating clean_params...
+2025-04-21 12:18:34,468 - data.preprocessor - WARNING - Found 10354 items with empty clean_params
+2025-04-21 12:18:34,478 - data.preprocessor - INFO - Filtering contact events...
+2025-04-21 12:18:34,479 - data.preprocessor - INFO - Creating interactions matrix...
+2025-04-21 12:18:34,480 - data.preprocessor - INFO - Splitting test users...
+2025-04-21 12:18:34,481 - data.preprocessor - INFO - Sampled 369 test users (20.0%)
+2025-04-21 12:19:22,029 - utils.cache - INFO - Cached preprocess_data (145.16s)
+2025-04-21 12:19:22,030 - utils.cache - INFO - Computing: build_features
+2025-04-21 12:19:22,030 - features.builder - INFO - Starting feature building...
+2025-04-21 12:19:22,030 - features.builder - INFO - Processing item parameters...
+2025-04-21 12:19:33,759 - features.builder - INFO - Processing categorical features...
+2025-04-21 12:19:33,865 - features.builder - INFO - Processing text features...
+2025-04-21 12:19:37,732 - features.builder - INFO - Combining all features...
+2025-04-21 12:19:38,568 - features.builder - INFO - Built feature matrix: (2264669, 4162)
+2025-04-21 12:19:48,470 - utils.cache - INFO - Cached build_features (19.22s)
+2025-04-21 12:19:48,470 - utils.cache - INFO - Computing: build_interaction_matrix
+2025-04-21 12:19:48,470 - features.builder - INFO - Building user-item interaction matrix...
+2025-04-21 12:19:48,472 - features.builder - INFO - Built interaction matrix: (0, 2264669)
+2025-04-21 12:19:51,673 - utils.cache - INFO - Cached build_interaction_matrix (0.00s)
+2025-04-21 12:19:51,673 - utils.cache - INFO - Computing: optimize_knn
+2025-04-21 12:19:52,426 - utils.cache - INFO - Cached optimize_knn (0.74s)
+2025-04-21 12:19:52,526 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:19:52,679 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:19:52,697 - main - INFO - Adding 1846 new users...
+2025-04-21 12:19:52,697 - main - ERROR - Critical error: index 0 is out of bounds for axis 0 with size 0
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 64, in main
+    popular_item = preprocessed_data['interactions']['item'].value_counts().index[0]
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\.venv\Lib\site-packages\pandas\core\indexes\base.py", line 5389, in __getitem__
+    return getitem(key)
+           ^^^^^^^^^^^^
+IndexError: index 0 is out of bounds for axis 0 with size 0
+2025-04-21 12:19:52,699 - main - INFO - === System shutdown ===
+2025-04-21 12:33:15,673 - main - INFO - === Starting recommendation system ===
+2025-04-21 12:33:15,674 - utils.cache - INFO - Computing: load_data
+2025-04-21 12:33:40,663 - utils.cache - INFO - Cached load_data (6.10s)
+2025-04-21 12:33:40,663 - utils.cache - INFO - Computing: preprocess_data
+2025-04-21 12:33:40,663 - data.preprocessor - INFO - Merging item data...
+2025-04-21 12:33:45,132 - data.preprocessor - INFO - Validating clean_params...
+2025-04-21 12:38:39,895 - data.preprocessor - WARNING - Found 20861 items with empty clean_params
+2025-04-21 12:38:39,913 - data.preprocessor - INFO - Filtering contact events...
+2025-04-21 12:38:39,922 - data.preprocessor - INFO - Creating interactions matrix...
+2025-04-21 12:38:39,923 - data.preprocessor - INFO - Splitting test users...
+2025-04-21 12:38:39,924 - data.preprocessor - INFO - Sampled 738 test users (20.0%)
+2025-04-21 12:40:11,288 - utils.cache - INFO - Cached preprocess_data (299.26s)
+2025-04-21 12:40:11,288 - utils.cache - INFO - Computing: build_features
+2025-04-21 12:40:11,288 - features.builder - INFO - Starting feature building...
+2025-04-21 12:40:11,288 - features.builder - INFO - Processing item parameters...
+2025-04-21 12:40:34,936 - features.builder - INFO - Processing categorical features...
+2025-04-21 12:40:35,154 - features.builder - INFO - Processing text features...
+2025-04-21 12:40:43,203 - features.builder - INFO - Combining all features...
+2025-04-21 12:40:45,059 - features.builder - INFO - Built feature matrix: (4529338, 4162)
+2025-04-21 12:41:05,263 - utils.cache - INFO - Cached build_features (39.25s)
+2025-04-21 12:41:05,263 - utils.cache - INFO - Computing: build_interaction_matrix
+2025-04-21 12:41:05,263 - features.builder - INFO - Building user-item interaction matrix...
+2025-04-21 12:41:05,265 - features.builder - INFO - Built interaction matrix: (0, 4529338)
+2025-04-21 12:41:11,857 - utils.cache - INFO - Cached build_interaction_matrix (0.00s)
+2025-04-21 12:41:11,857 - utils.cache - INFO - Computing: optimize_knn
+2025-04-21 12:41:12,630 - utils.cache - INFO - Cached optimize_knn (0.77s)
+2025-04-21 12:41:12,859 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:41:13,095 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:41:13,128 - main - INFO - Adding 3693 new users...
+2025-04-21 12:41:13,128 - main - ERROR - Critical error: name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 67, in main
+    new_users_recs = pd.DataFrame({
+                     ^^
+NameError: name 'pd' is not defined
+2025-04-21 12:41:13,138 - main - INFO - === System shutdown ===
+2025-04-21 12:42:19,862 - main - INFO - === Starting recommendation system ===
+2025-04-21 12:42:19,862 - utils.cache - INFO - Loading cached: load_data
+2025-04-21 12:42:29,935 - utils.cache - INFO - Loading cached: preprocess_data
+2025-04-21 12:43:01,834 - utils.cache - INFO - Loading cached: build_features
+2025-04-21 12:43:05,913 - utils.cache - INFO - Loading cached: build_interaction_matrix
+2025-04-21 12:43:07,379 - utils.cache - INFO - Loading cached: optimize_knn
+2025-04-21 12:43:07,577 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:43:07,810 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:43:07,843 - main - INFO - Adding 3693 new users...
+2025-04-21 12:43:07,843 - main - ERROR - Critical error: name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 67, in main
+    new_users_recs = pd.DataFrame({
+                     ^^
+NameError: name 'pd' is not defined
+2025-04-21 12:43:07,844 - main - INFO - === System shutdown ===
+2025-04-21 12:45:27,556 - main - INFO - === Starting recommendation system ===
+2025-04-21 12:45:27,556 - utils.cache - INFO - Loading cached: load_data
+2025-04-21 12:45:37,666 - utils.cache - INFO - Loading cached: preprocess_data
+2025-04-21 12:46:08,144 - utils.cache - INFO - Loading cached: build_features
+2025-04-21 12:46:12,112 - utils.cache - INFO - Loading cached: build_interaction_matrix
+2025-04-21 12:46:13,498 - utils.cache - INFO - Loading cached: optimize_knn
+2025-04-21 12:46:13,692 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:46:13,926 - models.knn - WARNING - No recommendations generated.
+2025-04-21 12:46:13,957 - main - INFO - Adding 3693 new users...
+2025-04-21 12:46:13,957 - main - ERROR - Critical error: name 'pd' is not defined
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 67, in main
+    new_users_recs = pd.DataFrame({
+                     ^^
+NameError: name 'pd' is not defined
+2025-04-21 12:46:13,958 - main - INFO - === System shutdown ===
+2025-04-21 14:39:51,850 - main - INFO - === Starting recommendation system ===
+2025-04-21 14:39:51,850 - utils.cache - INFO - Loading cached: load_data
+2025-04-21 14:40:01,510 - utils.cache - INFO - Loading cached: preprocess_data
+2025-04-21 14:40:32,095 - utils.cache - INFO - Loading cached: build_features
+2025-04-21 14:40:36,088 - utils.cache - INFO - Loading cached: build_interaction_matrix
+2025-04-21 14:40:37,460 - utils.cache - INFO - Loading cached: optimize_knn
+2025-04-21 14:40:37,933 - main - ERROR - Critical error: 'cookie'
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 59, in main
+    existing_users = set(final_recommendations['cookie'])
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\.venv\Lib\site-packages\pandas\core\indexes\range.py", line 417, in get_loc
+    raise KeyError(key)
+KeyError: 'cookie'
+2025-04-21 14:40:37,935 - main - INFO - === System shutdown ===
+2025-04-21 14:43:20,937 - main - INFO - === Starting recommendation system ===
+2025-04-21 14:43:20,938 - utils.cache - INFO - Loading cached: load_data
+2025-04-21 14:43:30,467 - utils.cache - INFO - Loading cached: preprocess_data
+2025-04-21 14:44:00,768 - utils.cache - INFO - Loading cached: build_features
+2025-04-21 14:44:04,650 - utils.cache - INFO - Loading cached: build_interaction_matrix
+2025-04-21 14:44:05,952 - utils.cache - INFO - Loading cached: optimize_knn
+2025-04-21 14:44:06,399 - main - ERROR - Critical error: 'cookie'
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 62, in main
+    existing_users = set(final_recommendations['cookie'])
+                         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\.venv\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\.venv\Lib\site-packages\pandas\core\indexes\range.py", line 417, in get_loc
+    raise KeyError(key)
+KeyError: 'cookie'
+2025-04-21 14:44:06,401 - main - INFO - === System shutdown ===
+2025-04-21 16:08:35,523 - main - INFO - === Starting recommendation system ===
+2025-04-21 16:08:35,523 - utils.cache - INFO - Loading cached: load_data
+2025-04-21 16:08:45,235 - utils.cache - INFO - Loading cached: preprocess_data
+2025-04-21 16:09:15,904 - utils.cache - INFO - Loading cached: build_features
+2025-04-21 16:09:19,908 - utils.cache - INFO - Loading cached: build_interaction_matrix
+2025-04-21 16:09:21,328 - utils.cache - INFO - Loading cached: optimize_knn
+2025-04-21 16:09:21,329 - main - ERROR - Critical error: 'dict' object has no attribute 'empty'
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 42, in main
+    recommendations = generate_recommendations(interaction_data, feature_data, knn_model)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\models\knn.py", line 65, in generate_recommendations
+    if interaction_data.empty:
+       ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'dict' object has no attribute 'empty'
+2025-04-21 16:09:21,330 - main - INFO - === System shutdown ===
+2025-04-21 16:22:48,536 - main - INFO - === Starting recommendation system ===
+2025-04-21 16:22:48,536 - utils.cache - INFO - Loading cached: load_data
+2025-04-21 16:22:58,825 - utils.cache - INFO - Loading cached: preprocess_data
+2025-04-21 16:23:29,436 - utils.cache - INFO - Loading cached: build_features
+2025-04-21 16:23:33,418 - utils.cache - INFO - Loading cached: build_interaction_matrix
+2025-04-21 16:23:34,743 - main - ERROR - Critical error: 'interaction_matrix'
+Traceback (most recent call last):
+  File "C:\Users\Алексей\PycharmProjects\recommendation_system\main.py", line 37, in main
+    interaction_data = interaction_result["interaction_matrix"]
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'interaction_matrix'
+2025-04-21 16:23:34,744 - main - INFO - === System shutdown ===

@@ -7,7 +7,7 @@ from pathlib import Path
 # Конфигурация
 RAW_DATA_DIR = "RAW_DATA"  # Папка с исходными данными
 TEST_DATA_DIR = "test_data"  # Куда сохранять уменьшенные данные
-SAMPLE_RATIO = 0.01  # 1% записей (можно настроить)
+SAMPLE_RATIO = 0.2  # 1% записей (можно настроить)
 RANDOM_SEED = 42  # Для воспроизводимости
 
 
