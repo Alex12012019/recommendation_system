@@ -68,7 +68,7 @@ def main():
             recommendations=recommendations_df,
             interactions=preprocessed_data["interactions"],
             test_users=preprocessed_data["test_users_split"],
-            node_mapping=feature_data["item_to_node"],
+            node_mapping=feature_data["node_mapping"],
         )
 
         print(f"Recall: {recall:.4f}")
@@ -83,11 +83,8 @@ def main():
         # 9. Обработка новых пользователей
         all_test_users = set(data['test_users']['cookie'].unique())
 
-        #print("Columns:", final_recommendations.columns)
-        #print("Head:\n", final_recommendations.head())
         print(type(final_recommendations))
         print(final_recommendations)
-        print(final_recommendations.columns)
 
         existing_users = set(final_recommendations['cookie'])
         new_users = all_test_users - existing_users
