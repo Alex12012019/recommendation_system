@@ -1,12 +1,14 @@
-import numpy as np
 import pandas as pd
 from scipy.sparse import csr_matrix, hstack
 from sklearn.feature_extraction import FeatureHasher
 from sklearn.decomposition import PCA
 from utils.cache import cache_step
 import logging
-from tqdm import tqdm
 import ast
+from scipy.sparse import csr_matrix
+import numpy as np
+from tqdm import tqdm
+
 
 logger = logging.getLogger(__name__)
 
@@ -116,47 +118,51 @@ def build_features(preprocessed_data):
 
 @cache_step('build_interaction_matrix')
 def build_interaction_matrix(preprocessed_data, feature_data):
-    """Построение матрицы взаимодействий пользователь-товар"""
+    """Построение матрицы взаимодействий пользователь-товар."""
     try:
         logger.info("Building user-item interaction matrix...")
+
         interactions = preprocessed_data['interactions']
         train_users = set(preprocessed_data['train_users'])
 
-        # Фильтрация только обучающих пользователей
+        if interactions.empty or not train_users:
+            logger.warning("Empty interactions or train_users.")
+            return None
+
+        # Фильтрация взаимодействий только от обучающих пользователей
         train_interactions = interactions[interactions['cookie'].isin(train_users)]
 
-        # Создаем маппинги
+        # Маппинг пользователей и товаров в индексы
         user_to_idx = {user: idx for idx, user in enumerate(train_interactions['cookie'].unique())}
         item_to_idx = feature_data['item_id_to_idx']
+        item_ids = feature_data['item_ids']  # предполагается, что порядок соответствует item_to_idx
 
-        # Подготовка данных для разреженной матрицы
+        # Подготовка списков для разреженной матрицы
         rows, cols, data = [], [], []
 
-        for _, row in tqdm(train_interactions.iterrows(),
-                           total=len(train_interactions),
-                           desc="Processing interactions"):
-            if row['item'] in item_to_idx:
-                rows.append(user_to_idx[row['cookie']])
-                cols.append(item_to_idx[row['item']])
-                data.append(row['weight'])
+        for row in tqdm(train_interactions.itertuples(index=False),
+                        total=len(train_interactions),
+                        desc="Processing interactions"):
+            if row.item in item_to_idx:
+                rows.append(user_to_idx[row.cookie])
+                cols.append(item_to_idx[row.item])
+                data.append(row.weight)
 
-        # Создание CSR матрицы
+        # Создание разреженной матрицы в формате CSR
         user_item_matrix = csr_matrix(
             (data, (rows, cols)),
             shape=(len(user_to_idx), len(item_to_idx)),
             dtype=np.float32
         )
 
-        logger.info(f"Built interaction matrix: {user_item_matrix.shape}")
-
-        print(f"Preprocessed interactions: {len(preprocessed_data)}")
-        print(f"Unique users: {preprocessed_data['user_id'].nunique()}")
-        print(f"Unique items: {preprocessed_data['item_id'].nunique()}")
+        logger.info(f"Built interaction matrix with shape {user_item_matrix.shape}")
+        logger.info(f"Number of training interactions: {len(train_interactions)}")
+        logger.info(f"Unique users: {len(user_to_idx)}, Unique items: {len(item_to_idx)}")
 
         return {
             'user_item_matrix': user_item_matrix,
             'user_ids': np.array(list(user_to_idx.keys())),
-            'item_ids': feature_data['item_ids'],
+            'item_ids': item_ids,
             'interactions': interactions,
             'user_to_idx': user_to_idx,
             'item_to_idx': item_to_idx
