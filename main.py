@@ -66,11 +66,13 @@ def main():
         # Оценка метрики recall
         recall = evaluate_recall(
             recommendations=recommendations_df,
-            ground_truth=interaction_result["user_item_matrix"],  # или нужные реальные данные
-            k=40
+            interactions=preprocessed_data["interactions"],
+            test_users=preprocessed_data["test_users_split"],
+            node_mapping=feature_data["item_to_node"],
         )
-        print(f"Recall: {recall:.4f}")
 
+        print(f"Recall: {recall:.4f}")
+        logger.info(f"Recall@40: {recall:.4f}")
 
         # 6. Вывод рекомендаций (например, в лог или файл)
         logger.info("Recommendations generated.")
