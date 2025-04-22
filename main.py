@@ -57,6 +57,7 @@ def main():
             preprocessed_data['test_users_split'],
             feature_data['node_mapping']
         )
+        print(f"Recall: {recall:.4f}") 
 
         # 8. Генерация финальных рекомендаций
         logger.info("Generating final recommendations...")
