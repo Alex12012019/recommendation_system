@@ -149,6 +149,10 @@ def build_interaction_matrix(preprocessed_data, feature_data):
 
         logger.info(f"Built interaction matrix: {user_item_matrix.shape}")
 
+        print(f"Preprocessed interactions: {len(preprocessed_data)}")
+        print(f"Unique users: {preprocessed_data['user_id'].nunique()}")
+        print(f"Unique items: {preprocessed_data['item_id'].nunique()}")
+
         return {
             'user_item_matrix': user_item_matrix,
             'user_ids': np.array(list(user_to_idx.keys())),

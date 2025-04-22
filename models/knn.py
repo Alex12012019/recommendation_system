@@ -51,19 +51,17 @@ import numpy as np
 from sklearn.neighbors import NearestNeighbors
 
 
-def generate_recommendations(interaction_matrix, user_ids, item_ids, knn_model):
+def generate_recommendations(interaction_matrix, user_ids, item_ids, knn_model, top_k=40):
     """
-    Генерирует рекомендации для каждого пользователя на основе KNN модели.
-
-    interaction_data: pd.DataFrame, user-item матрица взаимодействий (например, cookie x node)
-    feature_data: pd.DataFrame, признаки объявлений или товаров
-    knn_model: обученная модель KNN
-    top_k: количество рекомендаций на пользователя
+    Генерирует рекомендации для каждого пользователя на основе KNN модели и возвращает DataFrame.
     """
+    recommendations = []
 
-    recommendations = {}
     for user_idx, user_id in enumerate(user_ids):
-        distances, indices = knn_model.kneighbors(interaction_matrix[user_idx], n_neighbors=40)
+        distances, indices = knn_model.kneighbors(interaction_matrix[user_idx], n_neighbors=top_k)
         recommended_items = [item_ids[i] for i in indices.flatten()]
-        recommendations[user_id] = recommended_items
-    return recommendations
+
+        for item_id in recommended_items:
+            recommendations.append({'cookie': user_id, 'node': item_id})
+
+    return pd.DataFrame(recommendations)
