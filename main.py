@@ -3,6 +3,7 @@ import argparse
 from pathlib import Path
 import logging
 from utils.logging import setup_logger
+import pandas as pd
 
 # Инициализация логгера ДО всех импортов
 logger = setup_logger()
@@ -51,17 +52,25 @@ def main():
         recommendations = generate_recommendations(
             interaction_matrix, user_ids, item_ids, knn_model
         )
-        recall = evaluate_recall(
-            recommendations,
-            preprocessed_data['interactions'],
-            preprocessed_data['test_users_split'],
-            feature_data['node_mapping']
-        )
-        print(f"Recall: {recall:.4f}") 
 
         # 8. Генерация финальных рекомендаций
         logger.info("Generating final recommendations...")
         final_recommendations = generate_recommendations(interaction_matrix, user_ids, item_ids, knn_model)
+
+        # Преобразуем словарь рекомендаций в DataFrame
+        recommendations_df = pd.DataFrame([
+            {"user_id": user_id, "recommended_items": items}
+            for user_id, items in final_recommendations.items()
+        ])
+
+        # Оценка метрики recall
+        recall = evaluate_recall(
+            recommendations=recommendations_df,
+            ground_truth=interaction_result["user_item_matrix"],  # или нужные реальные данные
+            k=40
+        )
+        print(f"Recall: {recall:.4f}")
+
 
         # 6. Вывод рекомендаций (например, в лог или файл)
         logger.info("Recommendations generated.")
