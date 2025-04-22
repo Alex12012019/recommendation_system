@@ -26,24 +26,28 @@ def main():
             raise ValueError("No data loaded")
 
         # 2. Предобработка
+        logger.info("Preprocessing data...")
         preprocessed_data = preprocess_data(data)
         preprocessed_data = filter_features(preprocessed_data)
 
         # 3. Построение признаков
+        logger.info("Build features...")
         feature_data = build_features(preprocessed_data)
 
         # 5. Построение матрицы взаимодействий
+        logger.info("Building interaction matrix...")
         interaction_result = build_interaction_matrix(preprocessed_data, feature_data)
+        # Извлекаем необходимые данные из результата
         interaction_matrix = interaction_result["user_item_matrix"]
         user_ids = interaction_result["user_ids"]
         item_ids = interaction_result["item_ids"]
-        user_to_idx = interaction_result["user_to_idx"]
-        item_to_idx = interaction_result["item_to_idx"]
 
         # 6. Оптимизация KNN
+        logger.info("Optimizing KNN model...")
         knn_model = optimize_knn(feature_data, preprocessed_data['interactions'])
 
         # 7. Генерация и оценка рекомендаций
+        logger.info("generate_recommendations...")
         recommendations = generate_recommendations(
             interaction_matrix, user_ids, item_ids, knn_model
         )
@@ -55,7 +59,14 @@ def main():
         )
 
         # 8. Генерация финальных рекомендаций
-        final_recommendations = generate_recommendations(interaction_data, feature_data, knn_model)
+        logger.info("Generating final recommendations...")
+        final_recommendations = generate_recommendations(interaction_matrix, user_ids, item_ids, knn_model)
+
+        # 6. Вывод рекомендаций (например, в лог или файл)
+        logger.info("Recommendations generated.")
+        for user_id, recommended_items in final_recommendations.items():
+            logger.info(
+                f"User {user_id}: Recommended items {recommended_items[:10]}")  # Выводим только первые 10 товаров
 
         # 9. Обработка новых пользователей
         all_test_users = set(data['test_users']['cookie'].unique())

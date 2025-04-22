@@ -50,6 +50,7 @@ import pandas as pd
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 
+
 def generate_recommendations(interaction_matrix, user_ids, item_ids, knn_model):
     """
     Генерирует рекомендации для каждого пользователя на основе KNN модели.
@@ -62,9 +63,7 @@ def generate_recommendations(interaction_matrix, user_ids, item_ids, knn_model):
 
     recommendations = {}
     for user_idx, user_id in enumerate(user_ids):
-        distances, indices = knn_model.kneighbors(
-            interaction_matrix[user_idx], n_neighbors=40
-        )
+        distances, indices = knn_model.kneighbors(interaction_matrix[user_idx], n_neighbors=40)
         recommended_items = [item_ids[i] for i in indices.flatten()]
         recommendations[user_id] = recommended_items
     return recommendations
