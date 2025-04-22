@@ -59,9 +59,31 @@ def main():
 
         # Преобразуем словарь рекомендаций в DataFrame
         recommendations_df = pd.DataFrame([
-            {"user_id": user_id, "recommended_items": items}
+            {"cookie": user_id, "node": items[0] if items else None}  # node = первый рекомендованный item
             for user_id, items in final_recommendations.items()
         ])
+
+        # Удаляем пользователей без рекомендаций (если такие есть)
+        recommendations_df = recommendations_df.dropna()
+
+        # 9. Обработка новых пользователей
+        all_test_users = set(data['test_users']['cookie'].unique())
+        existing_users = set(recommendations_df['cookie'])
+        new_users = all_test_users - existing_users
+
+        if new_users:
+            logger.info(f"Adding {len(new_users)} new users...")
+            popular_item = preprocessed_data['interactions']['item'].value_counts().index[0]
+            popular_node = feature_data['node_mapping'].get(popular_item, 0)
+
+            new_users_recs = pd.DataFrame({
+                'cookie': list(new_users),
+                'node': [popular_node] * len(new_users)
+            })
+
+            recommendations_df = pd.concat([recommendations_df, new_users_recs])
+
+        recommendations_df.to_csv('submission.csv', index=False)
 
         # Оценка метрики recall
         recall = evaluate_recall(
