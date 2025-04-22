@@ -68,7 +68,9 @@ def main():
 
         # 9. Обработка новых пользователей
         all_test_users = set(data['test_users']['cookie'].unique())
-        existing_users = set(recommendations_df['cookie'])
+        final_recommendations_df = recommendations_df.rename(columns={'user_id': 'cookie'})
+
+        existing_users = set(final_recommendations_df['cookie'])
         new_users = all_test_users - existing_users
 
         if new_users:
