@@ -50,7 +50,7 @@ import pandas as pd
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 
-def generate_recommendations(interaction_data, feature_data, knn_model, top_k=40):
+def generate_recommendations(interaction_matrix, user_ids, item_ids, knn_model):
     """
     Генерирует рекомендации для каждого пользователя на основе KNN модели.
 
@@ -60,32 +60,11 @@ def generate_recommendations(interaction_data, feature_data, knn_model, top_k=40
     top_k: количество рекомендаций на пользователя
     """
 
-    recommendations = []
-
-    if isinstance(interaction_data, pd.DataFrame) and interaction_data.empty:
-        print("Interaction data is empty.")
-        return pd.DataFrame(columns=['cookie', 'recommended_node', 'score'])
-
-    # Пройтись по каждому пользователю (cookie)
-    for user_idx, user_id in enumerate(interaction_data.index):
-        user_vector = interaction_data.iloc[user_idx].values.reshape(1, -1)
-
-        try:
-            distances, indices = knn_model.kneighbors(user_vector, n_neighbors=top_k)
-        except Exception as e:
-            print(f"Ошибка при генерации для пользователя {user_id}: {e}")
-            continue
-
-        for rank, (dist, idx) in enumerate(zip(distances[0], indices[0])):
-            node_id = interaction_data.columns[idx]
-            recommendations.append({
-                'cookie': user_id,
-                'recommended_node': node_id,
-                'score': 1 / (1 + dist)  # Чем меньше расстояние — тем выше score
-            })
-
-    if not recommendations:
-        print("Нет сгенерированных рекомендаций.")
-        return pd.DataFrame(columns=['cookie', 'recommended_node', 'score'])
-
-    return pd.DataFrame(recommendations)
+    recommendations = {}
+    for user_idx, user_id in enumerate(user_ids):
+        distances, indices = knn_model.kneighbors(
+            interaction_matrix[user_idx], n_neighbors=40
+        )
+        recommended_items = [item_ids[i] for i in indices.flatten()]
+        recommendations[user_id] = recommended_items
+    return recommendations

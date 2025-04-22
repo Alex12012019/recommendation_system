@@ -33,13 +33,20 @@ def main():
         feature_data = build_features(preprocessed_data)
 
         # 5. Построение матрицы взаимодействий
-        interaction_data = build_interaction_matrix(preprocessed_data, feature_data)
+        interaction_result = build_interaction_matrix(preprocessed_data, feature_data)
+        interaction_matrix = interaction_result["user_item_matrix"]
+        user_ids = interaction_result["user_ids"]
+        item_ids = interaction_result["item_ids"]
+        user_to_idx = interaction_result["user_to_idx"]
+        item_to_idx = interaction_result["item_to_idx"]
 
         # 6. Оптимизация KNN
         knn_model = optimize_knn(feature_data, preprocessed_data['interactions'])
 
         # 7. Генерация и оценка рекомендаций
-        recommendations = generate_recommendations(interaction_data, feature_data, knn_model)
+        recommendations = generate_recommendations(
+            interaction_matrix, user_ids, item_ids, knn_model
+        )
         recall = evaluate_recall(
             recommendations,
             preprocessed_data['interactions'],
