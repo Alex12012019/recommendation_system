@@ -64,11 +64,17 @@ def main():
         ])
 
         # Удаляем пользователей без рекомендаций (если такие есть)
+        print(recommendations_df)
         recommendations_df = recommendations_df.dropna()
+        print(recommendations_df)
 
         # 9. Обработка новых пользователей
         all_test_users = set(data['test_users']['cookie'].unique())
         final_recommendations_df = recommendations_df.rename(columns={'user_id': 'cookie'})
+
+        print(type(final_recommendations_df))
+        print(final_recommendations_df)
+        print(len(final_recommendations_df))
 
         existing_users = set(final_recommendations_df['cookie'])
         new_users = all_test_users - existing_users

@@ -16,7 +16,7 @@ KNN_PARAMS = {
 }
 
 # Доля данных для обработки (1.0 - все данные, 0.1 - 10% и т.д.)
-DATA_SAMPLE_RATIO = 0.2
+DATA_SAMPLE_RATIO = 0.5
 
 # Валидация параметров
 if not (0 < DATA_SAMPLE_RATIO <= 1):
